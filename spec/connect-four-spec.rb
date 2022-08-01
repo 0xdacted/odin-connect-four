@@ -8,7 +8,7 @@ describe Player do
         valid = 2
         allow(turn).to receive(:gets).and_return(valid)
       end
-      it 'outputs messages informing the user that their selection was confirmed and where the piece was placed' do
+      it 'outputs message informing the user that their selection was confirmed and where the piece was placed' do
         board = Array.new(6) { Array.new(7) }
         name = turn.instance_variable_get(:@name)
         turn_message = "#{name} it's your turn! Please input your desired column (1-8) and press enter"
@@ -24,18 +24,35 @@ describe Player do
         valid = 2
         allow(turn).to receive(:gets).and_return(valid)
       end
-      it 'outputs messages informing the user that the selected column is full' do
+      it 'outputs message informing the user that the selected column is full' do
         name = turn.instance_variable_get(:@name)
         symbol = turn.instance_variable_get(:@symbol)
         board = Array.new(6, Array.new(7))
         board[0][1] = symbol
         turn_message = "#{name} it's your turn! Please input your desired column (1-8) and press enter"
-        error_message = "Sorry #{name}, that column is full, please select another column"
+        full_message = "Sorry #{name}, that column is full, please select another column"
+        expect(turn).to receive(:puts).with(turn_message).once
+        expect(turn).to receive(:puts).with(full_message).once
+        turn.select_column(board)
+      end
+    end
+
+    context 'when user inputs an invalid column' do
+      before do
+        invalid = 'a'
+        allow(turn).to receive(:gets).and_return(invalid)
+      end
+      it 'outputs message informing the user they have selected an invalid column' do
+        name = turn.instance_variable_get(:@name)
+        board = Array.new(6, Array.new(7))
+        turn_message = "#{name} it's your turn! Please input your desired column (1-8) and press enter"
+        error_message = "Sorry #{name}, you have selected an invalid column, please try again"
         expect(turn).to receive(:puts).with(turn_message).once
         expect(turn).to receive(:puts).with(error_message).once
         turn.select_column(board)
       end
     end
+
 end
 
 
