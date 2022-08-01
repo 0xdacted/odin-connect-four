@@ -34,5 +34,27 @@ class ConnectFour
     @player_two = Player.new(player_two_name, player_two_symbol)
     @board = Array.new(6) { Array.new(7) }
   end
-end
+
+  def place_symbol(column, symbol, board = @board)
+    i = 0
+      until i == 6
+        if board[i][column].nil?
+          board[i][column] = symbol
+          puts "You have placed your piece at column ##{column}, row ##{i}"
+          puts board
+          break
+        else
+          i += 1
+          if i == 6
+            puts "Column ##{column} is already full, please select a column with at least one empty space"
+            false
+          end
+        end
+      end
+    end
+
+  end
+
+  
+
 
