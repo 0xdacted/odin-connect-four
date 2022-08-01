@@ -35,6 +35,26 @@ describe Player do
   end
 end
 
+describe ConnectFour do
+  describe 'place_symbol' do
+    subject(:piece) {described_class.new}
+    context 'when the selected column has at least one empty space' do
+      it 'places the user\'s symbol in the first empty row within that column' do
+        column = 2
+        row = 1
+        board = piece.instance_variable_get(:@board)
+        symbol = piece.instance_variable_get(:@player_one_symbol)
+        board[0][column] = "O"
+        piece.place_symbol(column, symbol, board)
+        expect(board[0][column]).to eq("O")
+        expect(board[row][column]).to eq(symbol)
+      end
+    end
+
+  end
+end
+  
+
 
 
     
