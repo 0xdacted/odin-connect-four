@@ -1,9 +1,22 @@
 class Player
   attr_reader :name, :symbol
-  
+
   def initialize(name, symbol)
     @name = name
     @symbol = symbol
+  end
+
+  def select_column
+    puts "#{name} it's your turn! Please input your desired column (1-8) and press enter"
+    column = gets.to_i
+    if column < 9 && column > 0
+      puts "great choice #{name}, you have selected column #{column}"
+      column -= 1
+    else
+      puts "that's an invalid choice #{name}, please input a number between 1-8"
+        false
+    end
+    column
   end
 end
 
@@ -22,3 +35,4 @@ class ConnectFour
     @board = Array.new(6) { Array.new(7) }
   end
 end
+
