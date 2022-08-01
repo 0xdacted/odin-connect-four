@@ -63,16 +63,24 @@ describe ConnectFour do
     end
 
     context 'when the selected column has no empty spaces' do
-      it 'does not place the user\'s piece' do
-
+      it 'does not change the board state' do
+        symbol = piece.instance_variable_get(:@player_one_symbol)
+        column = 2
+        board = Array.new(6, Array.new(7))
+        board[0][column] = "A"
+        piece.place_symbol(column, symbol, board)
+        expect(board[1][column]).not_to eq(symbol)
+        expect(board[5][column]).to eq("A")
       end
+      
       it 'prints an error message' do
         symbol = piece.instance_variable_get(:@player_one_symbol)
         column = 2
         board = Array.new(6, Array.new(7))
         board[0][column] = "A"
         error_message = "That column is already full, please select an empty position\n"
-        expect { piece.place_symbol(column, symbol, board) }.to output(error_message).to_stdout 
+        expect(piece).to receive(:puts).with(error_message).once
+        piece.place_symbol(column, symbol, board)
       end
     end
   end
