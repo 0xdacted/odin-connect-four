@@ -39,7 +39,7 @@ describe ConnectFour do
   describe 'place_symbol' do
     subject(:piece) {described_class.new}
     context 'when the selected column has at least one empty space' do
-      it 'places the user\'s symbol in the first empty row within that column' do
+      it 'places the user\'s piece in the first empty row within that column' do
         column = 2
         board = piece.instance_variable_get(:@board)
         symbol = piece.instance_variable_get(:@player_one_symbol)
@@ -62,7 +62,19 @@ describe ConnectFour do
       end
     end
 
+    context 'when the selected column has no empty spaces' do
+      it 'does not place the user\'s piece' do
 
+      end
+      it 'prints an error message' do
+        symbol = piece.instance_variable_get(:@player_one_symbol)
+        column = 2
+        board = Array.new(6, Array.new(7))
+        board[0][column] = "A"
+        error_message = "That column is already full, please select an empty position\n"
+        expect { piece.place_symbol(column, symbol, board) }.to output(error_message).to_stdout 
+      end
+    end
   end
 end
   
