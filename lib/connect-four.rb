@@ -66,6 +66,28 @@ class ConnectFour
         end
       end
   end
+
+  def player_one_turn
+    column = @player_one.select_column
+    symbol = @player_one_symbol
+    name = @player_one_name
+    if place_symbol(column, symbol) == false
+      player_one_turn
+    else
+      winner?(name, symbol)
+    end
+  end
+
+  def player_two_turn
+    column = @player_two.select_column
+    symbol = @player_two_symbol
+    name = @player_two_name
+    if place_symbol(column, symbol) == false
+      player_one_turn
+    else
+      winner?(name, symbol)
+    end
+  end
 end
 
   
