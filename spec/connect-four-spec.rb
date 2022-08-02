@@ -1,8 +1,8 @@
-require './lib/connect-four.rb'
+require './lib/connect-four'
 
 describe Player do
   describe 'select_column' do
-    subject(:turn) {described_class.new('Johnny', 'X')}
+    subject(:turn) { described_class.new('Johnny', 'X') }
     context 'when user inputs a valid column' do
       before do
         valid = 2
@@ -31,21 +31,21 @@ describe Player do
         expect(turn).to receive(:puts).with(error_message).once
         turn.select_column
       end
-    end 
+    end
   end
 end
 
 describe ConnectFour do
   describe 'place_symbol' do
-    subject(:piece) {described_class.new}
+    subject(:piece) { described_class.new }
     context 'when the selected column has at least one empty space' do
       it 'places the user\'s piece in the first empty row within that column' do
         column = 2
         board = piece.instance_variable_get(:@board)
         symbol = piece.instance_variable_get(:@player_one_symbol)
-        board[0][column] = "O"
+        board[0][column] = 'O'
         piece.place_symbol(column, symbol, board)
-        expect(board[0][column]).to eq("O")
+        expect(board[0][column]).to eq('O')
         expect(board[1][column]).to eq(symbol)
       end
 
@@ -54,7 +54,7 @@ describe ConnectFour do
         row = 1
         board = piece.instance_variable_get(:@board)
         symbol = piece.instance_variable_get(:@player_one_symbol)
-        board[0][column] = "O"
+        board[0][column] = 'O'
         confirmation_message = "You have placed your piece at column ##{column + 1}, row ##{row + 1}"
         expect(piece).to receive(:puts).with(confirmation_message).once
         expect(piece).to receive(:puts).with(board).once
@@ -67,17 +67,17 @@ describe ConnectFour do
         symbol = piece.instance_variable_get(:@player_one_symbol)
         column = 2
         board = Array.new(6, Array.new(7))
-        board[0][column] = "A"
+        board[0][column] = 'A'
         piece.place_symbol(column, symbol, board)
         expect(board[1][column]).not_to eq(symbol)
-        expect(board[5][column]).to eq("A")
+        expect(board[5][column]).to eq('A')
       end
 
       it 'prints an error message' do
         symbol = piece.instance_variable_get(:@player_one_symbol)
         column = 2
         board = Array.new(6, Array.new(7))
-        board[0][column] = "A"
+        board[0][column] = 'A'
         error_message = "Column ##{column + 1} is already full, please select a column with at least one empty space"
         expect(piece).to receive(:puts).with(error_message).once
         piece.place_symbol(column, symbol, board)
@@ -86,7 +86,7 @@ describe ConnectFour do
   end
 
   describe 'winner?' do
-    subject(:game_board){described_class.new}
+    subject(:game_board) { described_class.new }
     context 'when a player has four pieces in a vertical row' do
       it 'causes that player to win' do
         board = game_board.instance_variable_get(:@board)
@@ -108,38 +108,31 @@ describe ConnectFour do
         board[5][0] = symbol && board[5][1] = symbol && board[5][2] = symbol && board[5][3] = symbol
         expect(game_board).to receive(:puts).with(winner_message).once
         game_board.winner?(name, symbol, board)
+      end
     end
-  end
 
-  context 'when a player has four pieces in a right/up diagonal row' do
-    it 'causes that player to win' do
-      board = game_board.instance_variable_get(:@board)
-      symbol = game_board.instance_variable_get(:@player_one_symbol)
-      name = game_board.instance_variable_get(:@player_one_name)
-      winner_message = "Congratulations #{name}, you have won!"
-      board[2][3] = symbol && board[3][4] = symbol && board[4][5] = symbol && board[5][6] = symbol
-      expect(game_board).to receive(:puts).with(winner_message).once
-      game_board.winner?(name, symbol, board)
+    context 'when a player has four pieces in a right/up diagonal row' do
+      it 'causes that player to win' do
+        board = game_board.instance_variable_get(:@board)
+        symbol = game_board.instance_variable_get(:@player_one_symbol)
+        name = game_board.instance_variable_get(:@player_one_name)
+        winner_message = "Congratulations #{name}, you have won!"
+        board[2][3] = symbol && board[3][4] = symbol && board[4][5] = symbol && board[5][6] = symbol
+        expect(game_board).to receive(:puts).with(winner_message).once
+        game_board.winner?(name, symbol, board)
+      end
     end
-   end
 
-   context 'when a player has four pieces in a right/down diagonal row' do
-    it 'causes that player to win' do
-      board = game_board.instance_variable_get(:@board)
-      symbol = game_board.instance_variable_get(:@player_one_symbol)
-      name = game_board.instance_variable_get(:@player_one_name)
-      winner_message = "Congratulations #{name}, you have won!"
-      board[5][4] = symbol && board[4][3] = symbol && board[3][2] = symbol && board[2][1] = symbol
-      expect(game_board).to receive(:puts).with(winner_message).once
-      game_board.winner?(name, symbol, board)
+    context 'when a player has four pieces in a right/down diagonal row' do
+      it 'causes that player to win' do
+        board = game_board.instance_variable_get(:@board)
+        symbol = game_board.instance_variable_get(:@player_one_symbol)
+        name = game_board.instance_variable_get(:@player_one_name)
+        winner_message = "Congratulations #{name}, you have won!"
+        board[5][4] = symbol && board[4][3] = symbol && board[3][2] = symbol && board[2][1] = symbol
+        expect(game_board).to receive(:puts).with(winner_message).once
+        game_board.winner?(name, symbol, board)
+      end
     end
-   end
   end
 end
-  
-
-
-
-    
-
-
