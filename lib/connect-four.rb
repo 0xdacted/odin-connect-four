@@ -57,19 +57,29 @@ class ConnectFour
       
       board.each_with_index do |row, row_index|
         row.each_with_index do |piece, column_index|
-          begin
-            if board[row_index][column_index] == symbol && board[row_index + 1][column_index] == symbol && board[row_index + 2][column_index] == symbol && board[row_index + 3][column_index] == symbol ||
-              board[row_index][column_index] == symbol && board[row_index][column_index + 1] == symbol && board[row_index][column_index + 2] == symbol && board[row_index][column_index + 3] == symbol ||
-              board[row_index][column_index] == symbol && board[row_index + 1][column_index + 1] == symbol && board[row_index + 2][column_index + 2] == symbol && board[row_index + 3][column_index + 3] == symbol
-              puts "Congratulations #{name}, you have won!"
-              return true
+              unless row_index > 2
+                if board[row_index][column_index] == symbol && board[row_index + 1][column_index] == symbol && board[row_index + 2][column_index] == symbol && board[row_index + 3][column_index] == symbol
+                  puts "Congratulations #{name}, you have won!"
+                  return true 
+                end
+              end
+              unless column_index > 3
+                if board[row_index][column_index] == symbol && board[row_index][column_index + 1] == symbol && board[row_index][column_index + 2] == symbol && board[row_index][column_index + 3] == symbol
+                  puts "Congratulations #{name}, you have won!"
+                  return true 
+                end
+              end
+              unless row_index > 2 || column_index > 3
+                if board[row_index][column_index] == symbol && board[row_index + 1][column_index + 1] == symbol && board[row_index + 2][column_index + 2] == symbol && board[row_index + 3][column_index + 3] == symbol
+                puts "Congratulations #{name}, you have won!"
+                return true
+                end
+              end
             end
-          rescue
-          end
           end
         end
       end
-  end
+  
 
   def player_one_turn
     symbol = @player_one_symbol

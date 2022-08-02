@@ -105,7 +105,7 @@ describe ConnectFour do
         symbol = game_board.instance_variable_get(:@player_two_symbol)
         name = game_board.instance_variable_get(:@player_two_name)
         winner_message = "Congratulations #{name}, you have won!"
-        board[0][0] = symbol && board[0][1] = symbol && board[0][2] = symbol && board[0][3] = symbol
+        board[5][0] = symbol && board[5][1] = symbol && board[5][2] = symbol && board[5][3] = symbol
         expect(game_board).to receive(:puts).with(winner_message).once
         game_board.winner?(name, symbol, board)
     end
@@ -117,7 +117,7 @@ describe ConnectFour do
       symbol = game_board.instance_variable_get(:@player_one_symbol)
       name = game_board.instance_variable_get(:@player_one_name)
       winner_message = "Congratulations #{name}, you have won!"
-      board[0][0] = symbol && board[1][1] = symbol && board[2][2] = symbol && board[3][3] = symbol
+      board[2][3] = symbol && board[3][4] = symbol && board[4][5] = symbol && board[5][6] = symbol
       expect(game_board).to receive(:puts).with(winner_message).once
       game_board.winner?(name, symbol, board)
     end
