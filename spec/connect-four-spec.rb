@@ -55,7 +55,7 @@ describe ConnectFour do
         board = piece.instance_variable_get(:@board)
         symbol = piece.instance_variable_get(:@player_one_symbol)
         board[0][column] = "O"
-        confirmation_message = "You have placed your piece at column ##{column}, row ##{row}"
+        confirmation_message = "You have placed your piece at column ##{column + 1}, row ##{row + 1}"
         expect(piece).to receive(:puts).with(confirmation_message).once
         expect(piece).to receive(:puts).with(board).once
         piece.place_symbol(column, symbol, board)
@@ -78,7 +78,7 @@ describe ConnectFour do
         column = 2
         board = Array.new(6, Array.new(7))
         board[0][column] = "A"
-        error_message = "Column ##{column} is already full, please select a column with at least one empty space"
+        error_message = "Column ##{column + 1} is already full, please select a column with at least one empty space"
         expect(piece).to receive(:puts).with(error_message).once
         piece.place_symbol(column, symbol, board)
       end
@@ -120,8 +120,9 @@ describe ConnectFour do
       board[0][0] = symbol && board[1][1] = symbol && board[2][2] = symbol && board[3][3] = symbol
       expect(game_board).to receive(:puts).with(winner_message).once
       game_board.winner?(name, symbol, board)
+    end
+   end
   end
-end
 end
   
 

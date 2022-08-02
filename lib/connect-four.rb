@@ -14,7 +14,7 @@ class Player
       column -= 1
     else
       puts "that's an invalid choice #{name}, please input a number between 1-8"
-        select_column
+       column = false
     end
     column
   end
@@ -66,6 +66,7 @@ class ConnectFour
             end
           rescue
           end
+          end
         end
       end
   end
@@ -74,6 +75,9 @@ class ConnectFour
     symbol = @player_one_symbol
     name = @player_one_name
     column = @player_one.select_column
+      if column == false
+        player_one_turn
+      end
     if place_symbol(column, symbol) == false
       player_one_turn
     else
@@ -85,6 +89,9 @@ class ConnectFour
     symbol = @player_two_symbol
     name = @player_two_name
     column = @player_two.select_column
+    if column == false
+      player_two_turn
+    end
     if place_symbol(column, symbol) == false
       player_two_turn
     else
@@ -118,9 +125,7 @@ class ConnectFour
       end
     end
   end
-end
 
-game = ConnectFour.new
-game.play
+
 
 
