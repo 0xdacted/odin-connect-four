@@ -72,18 +72,32 @@ describe ConnectFour do
         expect(board[1][column]).not_to eq(symbol)
         expect(board[5][column]).to eq("A")
       end
-      
+
       it 'prints an error message' do
         symbol = piece.instance_variable_get(:@player_one_symbol)
         column = 2
         board = Array.new(6, Array.new(7))
         board[0][column] = "A"
-        error_message = "That column is already full, please select an empty position\n"
+        error_message = "Column ##{column} is already full, please select a column with at least one empty space"
         expect(piece).to receive(:puts).with(error_message).once
         piece.place_symbol(column, symbol, board)
       end
     end
   end
+
+  describe 'winner?' do
+    subject(:game_board){described_class.new}
+    context 'when a player has four pieces in a vertical row' do
+      it 'causes that player to win, and the game to end' do
+        board = game_board.instance_variable_get(:@board)
+        symbol = game_board.instance_variable_get(:@player_one_symbol)
+        name = game_board.instance_variable_get(:@player_one_name)
+        winner_message = "Congratulations #{name}, you have won!"
+        board[0][0] = symbol && board[1][0] = symbol && board[2][0] = symbol && board[3][0] = symbol
+        expect(game_board).to receive(:puts).with(winner_message).once
+        game_board.winner?(name, symbol, board)
+      end
+    end
 end
   
 
