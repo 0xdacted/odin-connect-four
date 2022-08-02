@@ -14,7 +14,7 @@ class Player
       column -= 1
     else
       puts "that's an invalid choice #{name}, please input a number between 1-8"
-        false
+        select_column
     end
     column
   end
@@ -40,14 +40,14 @@ class ConnectFour
       until i == 6
         if board[i][column].nil?
           @board[i][column] = symbol
-          puts "You have placed your piece at column ##{column}, row ##{i}"
+          puts "You have placed your piece at column ##{column + 1}, row ##{i + 1}"
           puts @board
           break
         else
           i += 1
           if i == 6
-            puts "Column ##{column} is already full, please select a column with at least one empty space"
-            false
+            puts "Column ##{column + 1} is already full, please select a column with at least one empty space"
+            return false
           end
         end
       end
@@ -57,20 +57,23 @@ class ConnectFour
       
       board.each_with_index do |row, row_index|
         row.each_with_index do |piece, column_index|
-          if board[row_index][column_index] == symbol && board[row_index + 1][column_index] == symbol && board[row_index + 2][column_index] == symbol && board[row_index + 3][column_index] == symbol ||
-            board[row_index][column_index] == symbol && board[row_index][column_index + 1] == symbol && board[row_index][column_index + 2] == symbol && board[row_index][column_index + 3] == symbol ||
-            board[row_index][column_index] == symbol && board[row_index + 1][column_index + 1] == symbol && board[row_index + 2][column_index + 2] == symbol && board[row_index + 3][column_index + 3] == symbol
-            puts "Congratulations #{name}, you have won!"
-            true
+          begin
+            if board[row_index][column_index] == symbol && board[row_index + 1][column_index] == symbol && board[row_index + 2][column_index] == symbol && board[row_index + 3][column_index] == symbol ||
+              board[row_index][column_index] == symbol && board[row_index][column_index + 1] == symbol && board[row_index][column_index + 2] == symbol && board[row_index][column_index + 3] == symbol ||
+              board[row_index][column_index] == symbol && board[row_index + 1][column_index + 1] == symbol && board[row_index + 2][column_index + 2] == symbol && board[row_index + 3][column_index + 3] == symbol
+              puts "Congratulations #{name}, you have won!"
+              return true
+            end
+          rescue
           end
         end
       end
   end
 
   def player_one_turn
-    column = @player_one.select_column
     symbol = @player_one_symbol
     name = @player_one_name
+    column = @player_one.select_column
     if place_symbol(column, symbol) == false
       player_one_turn
     else
@@ -79,17 +82,45 @@ class ConnectFour
   end
 
   def player_two_turn
-    column = @player_two.select_column
     symbol = @player_two_symbol
     name = @player_two_name
+    column = @player_two.select_column
     if place_symbol(column, symbol) == false
-      player_one_turn
+      player_two_turn
     else
       winner?(name, symbol)
     end
   end
+
+  def play
+    i = 0
+    loop do
+      if player_one_turn == true
+        break
+      else
+        i += 1
+      end
+
+      if i == 42
+        puts 'This game has tied, please restart if you would like to play again!'
+        break
+      end
+
+      if player_two_turn == true
+        break
+      else
+        i += 1
+      end
+
+      if i == 42
+        puts 'This game has tied, please restart if you would like to play again!'
+        break
+      end
+    end
+  end
 end
 
-  
+game = ConnectFour.new
+game.play
 
 
