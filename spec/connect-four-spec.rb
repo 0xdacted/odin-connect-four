@@ -102,14 +102,26 @@ describe ConnectFour do
     context 'when a player has four pieces in a horizontal row' do
       it 'causes that player to win' do
         board = game_board.instance_variable_get(:@board)
-        symbol = game_board.instance_variable_get(:@player_one_symbol)
-        name = game_board.instance_variable_get(:@player_one_name)
+        symbol = game_board.instance_variable_get(:@player_two_symbol)
+        name = game_board.instance_variable_get(:@player_two_name)
         winner_message = "Congratulations #{name}, you have won!"
         board[0][0] = symbol && board[0][1] = symbol && board[0][2] = symbol && board[0][3] = symbol
         expect(game_board).to receive(:puts).with(winner_message).once
         game_board.winner?(name, symbol, board)
     end
   end
+
+  context 'when a player has four pieces in a diagonal row' do
+    it 'causes that player to win' do
+      board = game_board.instance_variable_get(:@board)
+      symbol = game_board.instance_variable_get(:@player_one_symbol)
+      name = game_board.instance_variable_get(:@player_one_name)
+      winner_message = "Congratulations #{name}, you have won!"
+      board[0][0] = symbol && board[1][1] = symbol && board[2][2] = symbol && board[3][3] = symbol
+      expect(game_board).to receive(:puts).with(winner_message).once
+      game_board.winner?(name, symbol, board)
+  end
+end
 end
   
 
