@@ -39,9 +39,9 @@ class ConnectFour
     i = 0
       until i == 6
         if board[i][column].nil?
-          board[i][column] = symbol
+          @board[i][column] = symbol
           puts "You have placed your piece at column ##{column}, row ##{i}"
-          puts board
+          puts @board
           break
         else
           i += 1
@@ -53,7 +53,20 @@ class ConnectFour
       end
     end
 
+    def winner?(name, symbol, board = @board)
+      
+      board.each_with_index do |row, row_index|
+        row.each_with_index do |piece, column_index|
+          if board[row_index][column_index] == symbol && board[row_index + 1][column_index] == symbol && board[row_index + 2][column_index] == symbol && board[row_index + 3][column_index] == symbol ||
+            board[row_index][column_index] == symbol && board[row_index][column_index + 1] == symbol && board[row_index][column_index + 2] == symbol && board[row_index][column_index + 3] == symbol ||
+            board[row_index][column_index] == symbol && board[row_index + 1][column_index + 1] == symbol && board[row_index + 2][column_index + 2] == symbol && board[row_index + 3][column_index + 3] == symbol
+            puts "Congratulations #{name}, you have won!"
+            true
+          end
+        end
+      end
   end
+end
 
   
 
